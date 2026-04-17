@@ -5,6 +5,9 @@ class Studio(models.Model):
     name = models.CharField(max_length=150, verbose_name="Название студии")
     address = models.CharField(max_length=255, verbose_name="Адрес (Город)")
 
+    class Meta:
+        verbose_name = "Студия"
+        verbose_name_plural = "Студии"
     def __str__(self):
         return self.name
 
@@ -19,6 +22,8 @@ class Master(models.Model):
 
     class Meta:
         ordering = ['century', 'name']
+        verbose_name = "Мастер"
+        verbose_name_plural = "Мастера"
 
     def __str__(self):
         return self.name

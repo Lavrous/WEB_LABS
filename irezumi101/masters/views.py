@@ -12,7 +12,7 @@ menu = [
 
 def masters_home(request):
     century_stats = Master.objects.aggregate(earliest=Min('century'), latest=Max('century'))
-    featured_masters = Master.objects.filter(Q(century=20) | Q(bio__icontains='эдо'))
+    featured_masters = Master.objects.filter(Q(century=20) | Q(bio__icontains='Эдо'))
     annotated_masters = Master.objects.annotate(
         badge=Value('Великий Хориши', output_field=CharField()),
         bio_len=Length('bio')
