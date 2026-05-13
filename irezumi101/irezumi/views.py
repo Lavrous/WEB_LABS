@@ -1,11 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import Http404
 from django.db.models import F, Count
+from .forms import AddMotifForm
 from .models import Motif, Category, TagPost
 
 menu = [
     {'title': 'Главная', 'url_name': 'home'},
     {'title': 'Мастера', 'url_name': 'masters_home'},
+    {'title': 'Добавить мотив', 'url_name': 'add_motif'},
 ]
 
 
@@ -58,3 +60,20 @@ def show_tag(request, tag_slug):
 
 def page_not_found(request, exception):
     return render(request, 'irezumi/404.html', status=404)
+
+def add_motif(request):
+    if request.method == 'POST':
+        form = AddMotifForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = AddMotifForm()
+
+    context = {
+        'title': 'Добавление мотива',
+        'form': form,
+        'cat_selected': None,
+        'menu': menu,
+    }
+    return render(request, 'irezumi/add_motif.html', context)
