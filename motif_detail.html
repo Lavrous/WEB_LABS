@@ -1,0 +1,31 @@
+{% extends 'irezumi/base.html' %}
+{% load static %}
+
+{% block breadcrumbs %}
+    <li>{{ motif.title }}</li>
+{% endblock %}
+
+{% block content %}
+    {% with motif.tags.all as tags %}
+        {% if tags %}
+            <ul class="tags-list">
+                <li>Теги:</li>
+                {% for t in tags %}
+                    <li><a href="{{ t.get_absolute_url }}">{{ t.tag }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h1>{{ motif.title }}</h1>
+
+    {% if motif.image %}
+        <img src="{{ motif.image.url }}" class="img-article-left" alt="{{ motif.title }}">
+    {% endif %}
+
+    {% autoescape off %}
+        {{ motif.content|linebreaks }}
+    {% endautoescape %}
+
+    <div class="clear"></div>
+{% endblock %}
